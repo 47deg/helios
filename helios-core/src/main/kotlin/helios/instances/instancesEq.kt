@@ -11,6 +11,13 @@ import helios.instances.jsobject.eq.eq
 import helios.instances.json.eq.eq
 
 @extension
+interface JsStringEq : Eq<JsString> {
+  override fun JsString.eqv(b: JsString): Boolean = with(String.eq()) {
+    value.toString().eqv(b.value.toString())
+  }
+}
+
+@extension
 interface JsObjectEq : Eq<JsObject> {
   override fun JsObject.eqv(b: JsObject): Boolean = with(Json.eq()) {
     value.entries.zip(b.value.entries) { aa, bb ->

@@ -13,6 +13,7 @@ dependencies {
 
     testImplementation("io.kotest:kotest-runner-junit5:$kotlinTestVersion")
     testImplementation("io.kotest:kotest-assertions-arrow:$kotlinTestVersion")
+    testImplementation("io.arrow-kt:arrow-test:$arrowVersion")
 
     kaptTest project(":helios-meta")
     kaptTest "io.arrow-kt:arrow-meta:$arrowVersion"

@@ -1,7 +1,9 @@
 package helios.core
 
 import arrow.core.*
+import arrow.core.extensions.monoid
 import arrow.core.extensions.option.applicative.applicative
+import arrow.typeclasses.Monoid
 import helios.instances.HeliosFacade
 import helios.instances.jsarray.eq.eq
 import helios.instances.jsnumber.eq.eq
@@ -76,9 +78,6 @@ sealed class Json {
       is JsBoolean -> ifJsBoolean(this)
     }
 
-  fun add(key: String, value: Json): JsObject =
-    JsObject(hashMapOf(key to value))
-
   fun asJsString(): Option<JsString> =
     (this as? JsString)?.some() ?: none()
 
@@ -97,12 +96,7 @@ sealed class Json {
   fun asJsNull(): Option<JsNull> =
     (this as? JsNull)?.some() ?: none()
 
-  fun merge(that: Json): Json =
-    Option.applicative().map(asJsObject(), that.asJsObject()) { (lhs, rhs) ->
-      lhs.toList().fold(rhs) { acc, (key, value) ->
-        rhs[key].fold({ acc.add(key, value) }, { r -> acc.add(key, value.merge(r)) })
-      }
-    }.fix().getOrElse { that }
+  fun merge(that: Json, M: Monoid<Json>): Json = M.combineAll(listOf(this, that))
 
   abstract fun noSpaces(): String
 
@@ -357,7 +351,9 @@ data class JsObject(val value: Map<String, Json>) : Json() {
       JsObject(keyValues.map { it.a to it.b }.toMap())
   }
 
-  fun toList(): List<Tuple2<String, Json>> = value.toList().map { it.first toT it.second }
+  fun add(key: String, value: Json): Json = JsObject(this.value + (key to value))
+
+  fun toList(): List<Tuple2<String, Json>> = value.toList().map { it.toTuple2() }
 
   override fun noSpaces(): String =
     value.map { (k, v) -> """"$k":${v.noSpaces()}""" }.joinToString(
