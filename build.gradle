@@ -48,7 +48,7 @@ buildscript {
 
     repositories {
         maven { url "https://jitpack.io" }
-        maven { url "http://dl.bintray.com/kotlin/kotlin-dev" }
+        maven { url "https://dl.bintray.com/kotlin/kotlin-dev" }
         maven { url "https://dl.bintray.com/jetbrains/markdown/" }
         maven { url "https://dl.bintray.com/arrow-kt/arrow-kt/" }
         maven { url "https://plugins.gradle.org/m2/" }
@@ -94,8 +94,8 @@ subprojects { project ->
     repositories {
         jcenter()
         maven { url "https://kotlin.bintray.com/kotlinx" }
-        maven { url "http://dl.bintray.com/kotlin/kotlin-dev" }
-        maven { url "http://dl.bintray.com/arrow-kt/arrow-kt" }
+        maven { url "https://dl.bintray.com/kotlin/kotlin-dev" }
+        maven { url "https://dl.bintray.com/arrow-kt/arrow-kt" }
         maven { url "https://dl.bintray.com/jetbrains/markdown/" }
         maven { url "https://jitpack.io" }
         maven { url "https://oss.sonatype.org/content/repositories/snapshots" }

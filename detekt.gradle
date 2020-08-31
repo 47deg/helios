@@ -1,7 +1,7 @@
 repositories {
 
     mavenCentral()
-    maven { url "http://dl.bintray.com/arturbosch/code-analysis" }
+    maven { url "https://dl.bintray.com/arturbosch/code-analysis" }
 
     configurations {
         detekt
